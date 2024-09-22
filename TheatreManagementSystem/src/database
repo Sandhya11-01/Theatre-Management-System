@@ -1,0 +1,37 @@
+CREATE DATABASE IF NOT EXISTS theatre_db;
+USE theatre_db;
+
+Table to store movies
+CREATE TABLE movies (
+    movie_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    genre VARCHAR(100),
+    show_time TIME,
+    available_seats INT NOT NULL
+);
+
+Table to store seats for each movie
+CREATE TABLE seats (
+    seat_id INT AUTO_INCREMENT PRIMARY KEY,
+    movie_id INT NOT NULL,
+    seat_number VARCHAR(10) NOT NULL,
+    is_available BOOLEAN DEFAULT TRUE,
+    FOREIGN KEY (movie_id) REFERENCES movies(movie_id)
+);
+
+Table to store ticket bookings
+CREATE TABLE tickets (
+    ticket_id INT AUTO_INCREMENT PRIMARY KEY,
+    movie_id INT NOT NULL,
+    customer_id INT NOT NULL,
+    seat_number VARCHAR(10) NOT NULL,
+    FOREIGN KEY (movie_id) REFERENCES movies(movie_id),
+    FOREIGN KEY (seat_number) REFERENCES seats(seat_number)
+);
+
+ Table to store customer information
+CREATE TABLE customers (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    email VARCHAR(255)
+);
